@@ -23,16 +23,9 @@ jobs:
 
       - name: Check if main.exe exists
         run: |
-          if [ -f main.exe ]; then
-            mv main.exe main-old.exe
-          fi
-        continue-on-error: true
-
-      - name: Check if main-old.exe exists
-        run: |
-          if [ -f main-old.exe ]; then
-            rm main-old.exe
-          fi
+          if (Test-Path main.exe) {
+            Rename-Item -Path main.exe -NewName main-old.exe
+          }
         continue-on-error: true
 
       - name: Upload Executable
@@ -47,7 +40,13 @@ jobs:
           git config --local user.name "ElDaifuku"
           git checkout main
           git pull origin main
+
+          if (Test-Path main.exe) {
+            Remove-Item main.exe
+          }
+
           mv dist/main.exe main.exe
+
           git add main.exe
           git commit -m "Add the latest executable"
           git push origin main
@@ -55,6 +54,7 @@ jobs:
           git push ghorigin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
 
