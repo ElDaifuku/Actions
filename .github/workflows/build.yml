@@ -1,0 +1,38 @@
+name: Build and Upload Executable
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 0' # Run once a week, adjust the cron schedule as needed
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Choose the Python version you need
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt  # Adjust as needed
+
+      - name: Build Executable
+        run: |
+          # Replace with your build command, for example:
+          # pyinstaller --onefile your_script.py
+          echo "Build script here"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: executables
+          path: dist  # Adjust the path to your build artifacts
