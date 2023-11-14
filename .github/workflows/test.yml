@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          pytest
+          test.py
 
       - name: Build Executable
         run: |
