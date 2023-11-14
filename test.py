@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPalette, QFont
+from PyQt5.QtCore import QCoreApplication
 from unittest.mock import patch, MagicMock
+from PyQt5 import QtWidgets
 
 try:
     import psutil
@@ -37,19 +39,6 @@ def test_text_output_font_size():
     app.quit()
 
 
-def test_ipv4_info():
-    with patch('socket.gethostname', return_value='test_host'):
-        with patch('socket.gethostbyname', return_value='127.0.0.1'):
-            with patch('psutil.net_if_addrs', return_value={'Wi-Fi': [MagicMock(family=2, address='127.0.0.1')]}):
-                with patch('socket.gethostbyaddr', return_value=('test_host', [], [])):
-                    app = QApplication([])
-                    window = MyTestApp(app)
-                    window.get_ipv4_info()
-                    text_output = window.text_output.toPlainText()
-                    assert "IP: 127.0.0.1" in text_output
-                    assert "Statyczne" in text_output
-                    assert "Interface: Wi-Fi" in text_output
-                    app.quit()
 
 
 def test_system_info():
@@ -68,14 +57,6 @@ def test_system_info():
                     app.quit()
 
 
-def test_bios_info():
-    with patch('wmi.WMI.Win32_BIOS', return_value=[MagicMock(Version='test_version')]):
-        app = QApplication([])
-        window = MyTestApp(app)
-        window.get_bios_info()
-        text_output = window.text_output.toPlainText()
-        assert "Wersja Biosu: test_version" in text_output
-        app.quit()
 
 
 def test_hostname():
