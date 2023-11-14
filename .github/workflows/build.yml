@@ -39,23 +39,24 @@ jobs:
           name: my_executables
           path: dist
 
-      - name: Commit and Push Executable
-        run: |
-          git config --local user.email "dsw43125@student.dsw.edu.pl"
-          git config --local user.name "ElDaifuku"
+- name: Commit and Push Executable
+  run: |
+    git config --local user.email "dsw43125@student.dsw.edu.pl"
+    git config --local user.name "ElDaifuku"
 
-          git checkout main
-          git pull origin main
+    git checkout main
+    git pull origin main
 
-          mv dist/main.exe main.exe
+    mv dist/main.exe main.exe
 
-          git add main.exe
-          git commit -m "Add the latest executable"
-          git push origin main
+    git add main.exe
+    git commit -m "Add the latest executable"
+    git push origin main
 
-	  git remote add ghorigin "https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
-    	  git push ghorigin main
-  	env:
-    	  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    git remote add ghorigin "https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+    git push ghorigin main
+  env:
+    GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
