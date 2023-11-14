@@ -13,17 +13,17 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Check Out Code
         uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Set Up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      - name: Install Dependencies
+      - name: Install Required Packages
         run: |
-          # Install any necessary dependencies here
+          # Install required packages
           # For example, you can install PyQt, pyinstaller, and pytest
           # pip install PyQt5 pyinstaller pytest
 
@@ -33,10 +33,11 @@ jobs:
           # pyinstaller --onefile your_script.py
           echo "Build script here"
 
-      - name: Upload Artifact
+      - name: Upload Executable
         uses: actions/upload-artifact@v3
         with:
-          name: executables
+          name: my_executables
           path: dist  # Adjust the path to your build artifacts
+
 
 
