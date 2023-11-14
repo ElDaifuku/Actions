@@ -49,7 +49,7 @@ jobs:
           git add main.exe
           git commit -m "Add the latest executable"
           git push origin main
-          git remote add ghorigin "https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git remote add ghorigin "https://$GH_TOKEN@github.com/ElDaifuku/Actions.git"
           git push ghorigin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
