@@ -54,8 +54,8 @@ jobs:
           git push origin main
 
 	  git remote add ghorigin "https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
-    git push ghorigin main
-  env:
-    GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    	  git push ghorigin main
+  	env:
+    	  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 
