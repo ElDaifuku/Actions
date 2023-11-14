@@ -1,0 +1,47 @@
+echo "name: Automated Testing
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check Out Code
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          # Install required packages, including pytest for unit tests
+          # pip install pytest
+
+      - name: Run Unit Tests
+        run: |
+          # Run unit tests using pytest
+          pytest
+
+      - name: Build Executable
+        run: |
+          # Assuming the build command is specified in your script
+          # Replace this with the actual command to build your executable
+          echo 'Build script here'
+
+      - name: Test Executable
+        run: |
+          # Assuming the test command for the executable is specified in your script
+          # Replace this with the actual command to test your executable
+          echo 'Test script for executable here'" > .github/workflows/test.yml
+
+
+
