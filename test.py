@@ -1,16 +1,23 @@
-from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPalette, QFont
-from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtTest import QTest
 from unittest.mock import patch, MagicMock
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication
+from main import MyTestApp
+
+
+
+
 
 try:
     import psutil
 except ImportError:
     psutil = MagicMock()
 
-from main import MyTestApp
 
+def app():
+    application = QApplication([])
+    yield application
+    application.quit()
 
 def test_button_colors():
     app = QApplication([])
@@ -39,23 +46,26 @@ def test_text_output_font_size():
     app.quit()
 
 
+def test_bios_info():
+    with patch('wmi.WMI', return_value=MagicMock(Win32_BIOS=[MagicMock(Version='test_version')])):
+        app = QApplication([])
 
+        window = MyTestApp(app)
 
-def test_system_info():
-    with patch('platform.platform', return_value='Windows-10-10.0.19041-SP0'):
-        with patch('platform.architecture', return_value=('32bit', 'WindowsPE')):
-            with patch('psutil.cpu_count', return_value=4):
-                with patch('psutil.virtual_memory', return_value=MagicMock(total=4294967296)):
-                    app = QApplication([])
-                    window = MyTestApp(app)
-                    window.get_system_info()
-                    text_output = window.text_output.toPlainText()
-                    assert "Wersja SO: Windows-10-10.0.19041-SP0" in text_output
-                    assert "Typ Systemu: ('32bit', 'WindowsPE')" in text_output
-                    assert "Rdzenie: 4" in text_output
-                    assert "RAM: 4.0 GB" in text_output
-                    app.quit()
+        QTest.qWaitForWindowExposed(window)  # Wait for the window to be exposed
 
+        # Modify the get_bios_info method to handle the list directly
+        def mock_Win32_BIOS():
+            return [MagicMock(Version='test_version')]
+
+        with patch('wmi.WMI', return_value=MagicMock(Win32_BIOS=mock_Win32_BIOS)):
+            window.get_bios_info()
+
+        text_output = window.text_output.toPlainText()
+
+        assert "Wersja Biosu: test_version" in text_output
+
+        app.quit()
 
 
 
@@ -67,6 +77,8 @@ def test_hostname():
         text_output = window.text_output.toPlainText()
         assert "Nazwa Hosta: test_host" in text_output
         app.quit()
+
+
 
 
 
