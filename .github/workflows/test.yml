@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install PyQt5 pytest
+          pip install PyQt5 pytest psutil
 
       - name: Run Unit Tests
         run: |
