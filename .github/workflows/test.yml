@@ -1,11 +1,11 @@
-echo "name: Automated Testing
+name: Automated Testing
 
 on:
   schedule:
     - cron: '0 0 * * 0'
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -23,25 +23,22 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          # Install required packages, including pytest for unit tests
-          # pip install pytest
+          pip install pytest
 
       - name: Run Unit Tests
         run: |
-          # Run unit tests using pytest
           pytest
 
       - name: Build Executable
         run: |
-          # Assuming the build command is specified in your script
           # Replace this with the actual command to build your executable
           echo 'Build script here'
 
       - name: Test Executable
         run: |
-          # Assuming the test command for the executable is specified in your script
           # Replace this with the actual command to test your executable
-          echo 'Test script for executable here'" > .github/workflows/test.yml
+          echo 'Test script for executable here'
+
 
 
 
