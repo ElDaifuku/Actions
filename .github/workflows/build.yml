@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 0 * * 0' # Run once a week, adjust the cron schedule as needed
+    - cron: '0 0 * * 0'
   workflow_dispatch:
 
 jobs:
@@ -37,7 +37,21 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: my_executables
-          path: dist  # Adjust the path to your build artifacts
+          path: dist
+
+      - name: Commit and Push Executable
+        run: |
+          git config --local user.email "dsw43125@student.dsw.edu.pl"
+          git config --local user.name "ElDaifuku"
+
+          git checkout main
+          git pull origin main
+
+          mv dist/main.exe main.exe
+
+          git add main.exe
+          git commit -m "Add the latest executable"
+          git push origin main
 
 
 
