@@ -3,12 +3,21 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPalette, QFont
 from PyQt5.QtCore import Qt
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from main import MyTestApp
 
+try:
+    import psutil
+except ImportError:
+    psutil = MagicMock()
+
+from your_main_file import MyTestApp
+
 app = QApplication(sys.argv)
 window = MyTestApp(app)
+
+
 
 
 class TestUIElements(unittest.TestCase):
