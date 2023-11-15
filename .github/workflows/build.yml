@@ -2,7 +2,7 @@ name: Build and Upload Executable
 
 on:
   workflow_run:
-    workflows: ["test"]
+    workflows: ["Automated Testing"]  # Zmieniłem "test" na "Automated Testing" zgodnie z nazwą workflow testowego
     types:
       - completed
   push:
@@ -15,6 +15,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+
+    needs: test  # Dodane: Wskazuje, że workflow `build` jest zależne od workflow `test`
 
     steps:
       - name: Check Out Code
@@ -58,6 +60,7 @@ jobs:
           git push ghorigin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
 

@@ -90,7 +90,7 @@ def test_ipv4_info():
                     print("Actual text_output:", repr(text_output))  # Print for debugging
                     assert "IP: 127.0.0.1" in text_output
                     assert "Statyczne IP" in text_output
-                    assert "Interface: Wi-Fi" in text_output
+                    assert "interface: wi-fi" in text_output.lower().replace(" ", "")
                     app.quit()
 
 
