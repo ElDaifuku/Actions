@@ -33,7 +33,10 @@ jobs:
       - name: Check if main.exe exists and Rename
         run: |
           if (Test-Path main.exe) {
-            mv main.exe dist/main-old.exe
+            if (Test-Path dist/main-old.exe) {
+              Remove-Item dist/main-old.exe -Force
+            }
+            Move-Item -Path main.exe -Destination dist/main-old.exe -Force
           }
 
       - name: Copy main.exe to dist directory
@@ -61,7 +64,7 @@ jobs:
           git push ghorigin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      
+
 
 
 
