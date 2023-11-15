@@ -26,17 +26,9 @@ jobs:
           git config --local user.name "ElDaifuku"
           
           git checkout main
-          git pull origin main
           
           Remove-Item main.exe -ErrorAction SilentlyContinue
-          
-          
-          # Set working directory to the root of the repository
-          Set-Location $Env:GITHUB_WORKSPACE
-          
-          git checkout main
-          git pull origin main
-          
+              
           git add main.exe
           git commit -m "Update main.exe with the latest executable"
           git push origin main
