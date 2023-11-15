@@ -32,12 +32,11 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Check if main.exe exists
+      - name: Check if main.exe exists and Rename
         run: |
           if (Test-Path main.exe) {
             Rename-Item -Path main.exe -NewName main-old.exe
           }
-        continue-on-error: true
 
       - name: Upload Executable
         uses: actions/upload-artifact@v3
