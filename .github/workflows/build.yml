@@ -13,9 +13,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:  # Dodane puste zadanie, które nie ma zależności
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do nothing
+        run: echo "This job does nothing"
+
   build:
     runs-on: windows-latest
-
     needs: test
 
     steps:
@@ -60,6 +65,7 @@ jobs:
           git push ghorigin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
 
