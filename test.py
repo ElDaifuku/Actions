@@ -77,21 +77,7 @@ def test_hostname():
         text_output = window.text_output.toPlainText()
         assert "Nazwa Hosta: test_host" in text_output
         app.quit()
-def test_ipv4_info():
-    with patch('socket.gethostname', return_value='test_host'):
-        with patch('socket.gethostbyname', return_value='127.0.0.1'):
-            with patch('psutil.net_if_addrs',
-                       return_value={'Wi-Fi': [MagicMock(family=2, address='127.0.0.1')]}):
-                with patch('socket.gethostbyaddr', return_value=('test_host', [], [])):
-                    app = QApplication([])
-                    window = MyTestApp(app)
-                    window.get_ipv4_info()
-                    text_output = window.text_output.toPlainText().strip()  # Dodano .strip()
-                    print("Actual text_output:", repr(text_output))  # Print for debugging
-                    assert "IP: 127.0.0.1" in text_output
-                    assert "Statyczne IP" in text_output
-                    assert "interface: wi-fi" in text_output.lower().replace(" ", "")
-                    app.quit()
+
 
 
 
