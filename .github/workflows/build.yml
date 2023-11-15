@@ -35,10 +35,6 @@ jobs:
           if (Test-Path main.exe) {
             mv main.exe dist/main-old.exe
           }
-
-      - name: Copy main.exe to dist directory
-        run: Copy-Item main.exe -Destination dist
-
       - name: Upload Executable
         uses: actions/upload-artifact@v3
         with:
