@@ -37,7 +37,15 @@ jobs:
               Remove-Item dist/main-old.exe -Force
             }
             Move-Item -Path main.exe -Destination dist/main-old.exe -Force
+
+            # Change directory to the root of your project
+            cd $Env:GITHUB_WORKSPACE
+
+            # Copy main.exe to dist directory
+            Copy-Item main.exe -Destination dist
           }
+        shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+      
 
       - name: Copy main.exe to dist directory
         run: Copy-Item main.exe -Destination dist
