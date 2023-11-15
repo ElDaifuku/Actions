@@ -25,6 +25,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install pyinstaller
+        run: pip install pyinstaller
+
       - name: Install Dependencies
         run: pip install -r requirements.txt  # Adjust as needed
 
@@ -48,6 +51,7 @@ jobs:
           git push origin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
 
