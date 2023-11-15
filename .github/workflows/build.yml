@@ -20,12 +20,6 @@ jobs:
       - name: Check Out Code
         uses: actions/checkout@v2
 
-      - name: Create dist directory
-        run: New-Item -ItemType Directory -Force -Path dist
-
-      - name: Copy main.exe to dist directory
-        run: Copy-Item main.exe -Destination dist -Force
-
       - name: Replace main.exe in main branch
         run: |
           git config --local user.email "dsw43125@student.dsw.edu.pl"
@@ -35,14 +29,16 @@ jobs:
 
           Remove-Item main.exe -ErrorAction SilentlyContinue
 
-          # Copy the new executable from dist to the root
-          Copy-Item -Path dist/main.exe -Destination .
+          # Replace main.exe with the new executable
+          Copy-Item -Path main.exe -Destination .
 
           git add main.exe
           git commit -m "Update main.exe with the latest executable"
           git push origin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+
 
 
 
