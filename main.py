@@ -95,7 +95,7 @@ class MyTestApp(QMainWindow):
         os_architecture = platform.architecture()
         num_cores = psutil.cpu_count(logical=False)
         ram = round(psutil.virtual_memory().total / (1024 ** 3), 2)
-        result = (f"Wersja SO: {os_version}\nTyp Systemu: {os_architecture}\nRdzenie: {num_cores}\nRAM: {ram} GB"
+        result = (f"Wersja SO: {os_version}\nTyp Systemu: {os_architecture}\nRdzenie: {num_cores}\nRAM: {ram} Gb"
                   f"\n--------------")
         self.text_output.append(result)
 
