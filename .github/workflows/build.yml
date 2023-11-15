@@ -1,4 +1,4 @@
-name: Build and Upload Executable
+name: Build and Replace Executable
 
 on:
   workflow_run:
@@ -13,15 +13,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Do nothing
-        run: echo "This job does nothing"
-
   build:
     runs-on: windows-latest
-    needs: test
 
     steps:
       - name: Check Out Code
@@ -30,35 +23,10 @@ jobs:
       - name: Create dist directory
         run: New-Item -ItemType Directory -Force -Path dist
 
-      - name: Check if main.exe exists and Rename
-        run: |
-          if (Test-Path main.exe) {
-            if (Test-Path dist/main-old.exe) {
-              Remove-Item dist/main-old.exe -Force
-            }
-            Move-Item -Path main.exe -Destination dist/main-old.exe -Force
-
-            # Change directory to the root of your project
-            Set-Location $Env:GITHUB_WORKSPACE
-
-            # Copy main.exe to dist directory
-            Copy-Item -Path main.exe -Destination dist -Force
-          }
-        shell: pwsh
-      
-
-
-
       - name: Copy main.exe to dist directory
-        run: Copy-Item main.exe -Destination dist
+        run: Copy-Item main.exe -Destination dist -Force
 
-      - name: Upload Executable
-        uses: actions/upload-artifact@v3
-        with:
-          name: my_executables
-          path: dist
-
-      - name: Commit and Push Executable
+      - name: Replace main.exe in main branch
         run: |
           git config --local user.email "dsw43125@student.dsw.edu.pl"
           git config --local user.name "ElDaifuku"
@@ -67,13 +35,15 @@ jobs:
 
           Remove-Item main.exe -ErrorAction SilentlyContinue
 
-          git add dist/main-old.exe dist/main.exe
-          git commit -m "Add the latest executable and create backup"
+          # Copy the new executable from dist to the root
+          Copy-Item -Path dist/main.exe -Destination .
+
+          git add main.exe
+          git commit -m "Update main.exe with the latest executable"
           git push origin main
-          git remote add ghorigin "https://$GH_TOKEN@github.com/ElDaifuku/Actions.git"
-          git push ghorigin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
 
