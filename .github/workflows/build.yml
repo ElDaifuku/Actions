@@ -39,7 +39,7 @@ jobs:
             Move-Item -Path main.exe -Destination dist/main-old.exe -Force
 
             # Change directory to the root of your project
-            Set-Location $Env:D:\a\Actions\Actions
+            Set-Location $Env:GITHUB_WORKSPACE
 
             # Copy main.exe to dist directory
             Copy-Item main.exe -Destination dist
