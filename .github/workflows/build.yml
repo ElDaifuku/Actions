@@ -42,9 +42,10 @@ jobs:
             Set-Location $Env:GITHUB_WORKSPACE
 
             # Copy main.exe to dist directory
-            Copy-Item main.exe -Destination dist
+            Copy-Item -Path main.exe -Destination dist -Force
           }
-        shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+        shell: pwsh
+      
 
 
 
