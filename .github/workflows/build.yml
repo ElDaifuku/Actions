@@ -29,6 +29,9 @@ jobs:
 
           Remove-Item main.exe -ErrorAction SilentlyContinue
 
+          # Set working directory to the root of the repository
+          Set-Location $Env:GITHUB_WORKSPACE
+
           # Replace main.exe with the new executable
           Copy-Item -Path main.exe -Destination .
 
@@ -37,6 +40,7 @@ jobs:
           git push origin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      
 
 
 
