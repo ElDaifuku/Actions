@@ -20,6 +20,17 @@ jobs:
       - name: Check Out Code
         uses: actions/checkout@v2
 
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt  # Adjust as needed
+
+      - name: Build main.exe
+        run: pyinstaller --onefile main.py
+
       - name: Replace main.exe in main branch
         run: |
           git config --local user.email "dsw43125@student.dsw.edu.pl"
@@ -28,12 +39,16 @@ jobs:
           git checkout main
           
           Remove-Item main.exe -ErrorAction SilentlyContinue
+          
+          # Move the newly built main.exe to the root directory
+          Move-Item dist\main.exe . -Force
               
           git add main.exe
           git commit -m "Update main.exe with the latest executable"
           git push origin main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 
 
