@@ -1,6 +1,10 @@
 name: Build and Upload Executable
 
 on:
+  workflow_run:
+    workflows: ["test"]
+    types:
+      - completed
   push:
     branches:
       - main
