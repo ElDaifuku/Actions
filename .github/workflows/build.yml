@@ -24,7 +24,10 @@ jobs:
         run: |
           git config --local user.email "dsw43125@student.dsw.edu.pl"
           git config --local user.name "ElDaifuku"
-
+          
+          git checkout main
+          git pull origin main
+          
           Remove-Item main.exe -ErrorAction SilentlyContinue
           
           
